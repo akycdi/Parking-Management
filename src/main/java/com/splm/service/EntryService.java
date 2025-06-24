@@ -1,6 +1,7 @@
 package com.splm.service;
 
 import com.splm.model.ParkingSpace;
+import com.splm.model.Ticket;
 import com.splm.model.Vehicle;
 import com.splm.repository.ParkingSpaceRepository;
 import com.splm.repository.TicketRepository;
@@ -20,9 +21,11 @@ public class EntryService {
     @Autowired
     public VehicleRepository vehicleRepository;
 
+    @Autowired
     public TicketRepository ticketRepository;
 
-    public ParkingSpace allocateParkingSpace(Vehicle vehicle) {
+
+     public ParkingSpace allocateParkingSpace(Vehicle vehicle) {
         ParkingSpace availableSpace = parkingSpaceRepository.findFirstByAvailableTrueAndSize(vehicle.getType());
         if (availableSpace != null) {
             availableSpace.setAvailable(false);
@@ -30,6 +33,14 @@ public class EntryService {
             parkingSpaceRepository.save(availableSpace);
             vehicle.setEntryTime(LocalDateTime.now());
             vehicleRepository.save(vehicle);
+
+            Ticket ticket = new Ticket();
+            ticket.setVehicleId(vehicle.getId());
+            ticket.setVehicleType(vehicle.getType());
+            ticket.setParkingSpaceId(availableSpace.getId());
+            ticket.setEntryTime(vehicle.getEntryTime());
+            ticketRepository.save(ticket);
+
             return availableSpace;
         }
         return null;

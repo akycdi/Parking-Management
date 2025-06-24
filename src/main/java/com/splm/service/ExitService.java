@@ -1,6 +1,8 @@
 package com.splm.service;
 
+import com.splm.model.ParkingSpace;
 import com.splm.model.Ticket;
+import com.splm.repository.ParkingSpaceRepository;
 import com.splm.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,11 @@ public class ExitService {
     @Autowired
     private FeeCalculationService feeCalculationService;
 
-    public void checkoutVehicle(Long ticketId) {
+     @Autowired
+    private ParkingSpaceRepository parkingSpaceRepository;
+
+
+     public void checkoutVehicle(Long ticketId) {
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new RuntimeException("Ticket not found"));
 
@@ -26,6 +32,14 @@ public class ExitService {
             ticket.getExitTime()
         );
         ticket.setFee(fee);
+
+        if (ticket.getParkingSpaceId() != null) {
+            ParkingSpace parkingSpace = parkingSpaceRepository.findById(ticket.getParkingSpaceId())
+                .orElseThrow(() -> new RuntimeException("Parking space not found"));
+            parkingSpace.setAvailable(true);
+            parkingSpace.setAssignedVehicleId(null);
+            parkingSpaceRepository.save(parkingSpace);
+        }
 
         ticketRepository.save(ticket);
     }
