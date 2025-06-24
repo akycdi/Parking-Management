@@ -3,6 +3,7 @@ package com.splm.service;
 import com.splm.model.ParkingSpace;
 import com.splm.model.Vehicle;
 import com.splm.repository.ParkingSpaceRepository;
+import com.splm.repository.TicketRepository;
 import com.splm.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,12 @@ import java.util.List;
 public class EntryService {
 
     @Autowired
-    private ParkingSpaceRepository parkingSpaceRepository;
+    public ParkingSpaceRepository parkingSpaceRepository;
 
     @Autowired
-    private VehicleRepository vehicleRepository;
+    public VehicleRepository vehicleRepository;
+
+    public TicketRepository ticketRepository;
 
     public ParkingSpace allocateParkingSpace(Vehicle vehicle) {
         ParkingSpace availableSpace = parkingSpaceRepository.findFirstByAvailableTrueAndSize(vehicle.getType());

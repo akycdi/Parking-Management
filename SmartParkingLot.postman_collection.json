@@ -1,0 +1,93 @@
+{
+  "info": {
+    "name": "Smart Parking Lot Management",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Entry - Check In Vehicle",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": \"AP01AB1234\",\n  \"license\": \"AP01AB1234\",\n  \"type\": \"car\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/entry/checkin",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "entry", "checkin"]
+        }
+      }
+    },
+    {
+      "name": "Entry - Get Available Spaces",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/api/entry/available-spaces",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "entry", "available-spaces"]
+        }
+      }
+    },
+    {
+      "name": "ParkingSpace - Get All",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/parking-spaces",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["parking-spaces"]
+        }
+      }
+    },
+    {
+      "name": "ParkingSpace - Get By ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/parking-spaces/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["parking-spaces", "1"]
+        }
+      }
+    },
+    {
+      "name": "ParkingSpace - Get Available",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/parking-spaces/available",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["parking-spaces", "available"]
+        }
+      }
+    },
+    {
+      "name": "Exit - Checkout Vehicle",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "http://localhost:8080/api/exit/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "exit", "1"]
+        }
+      }
+    }
+  ]
+}
